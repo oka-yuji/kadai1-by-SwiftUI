@@ -30,14 +30,15 @@ struct ContentView: View {
                     .modifier(MyModifier())
                 //計算結果を処理するButton
                 Button(action: {
-                    //入力した数値を配列に入れる
-                    let sumAraay = [inputTextOne, inputTextTwo, inputTextThree, inputTextFour, inputTextFive]
-                    //mapを使用してInt型へ　reduceでは配列に入っている数値を全て足します
-                    let sum = sumAraay
-                        .map { Int($0) ?? 0 }
-                        .reduce(0, +)
-                    //合計を表示するtextへ合計値を返します
-                    outputText = String(sum)
+                    outputText = Calculator().calculate(
+                        textArray: [
+                            inputTextOne,
+                            inputTextTwo,
+                            inputTextThree,
+                            inputTextFour,
+                            inputTextFive
+                        ]
+                    )
                 }, label: {
                     Text("Button")
                 })
@@ -57,12 +58,22 @@ struct ContentView_Previews: PreviewProvider {
     }
 }
 
-struct MyModifier: ViewModifier {
+private struct MyModifier: ViewModifier {
     func body(content: Content) -> some View {
         content
             .padding(.horizontal)
             .frame(width: 150, height: 30)
             .background(Color.gray.opacity(0.3))
             .cornerRadius(5)
+    }
+}
+
+struct Calculator {
+    func calculate(textArray: [String]) -> String {
+        String(
+            textArray
+                .map { Int($0) ?? 0 }
+                .reduce(0, +)
+        )
     }
 }
