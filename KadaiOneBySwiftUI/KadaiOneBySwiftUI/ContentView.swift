@@ -57,7 +57,7 @@ struct ContentView_Previews: PreviewProvider {
     }
 }
 
-struct MyModifier: ViewModifier {
+private struct MyModifier: ViewModifier {
     func body(content: Content) -> some View {
         content
             .padding(.horizontal)
